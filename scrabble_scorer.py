@@ -11,15 +11,16 @@ OLD_POINT_STRUCTURE = {
   10: ['Q', 'Z']
 }
 
+
+
 def old_scrabble_scorer(word):
     word = word.upper()
     letterPoints = ""
 
     for char in word:
 
-        for point_value in old_point_structure:
-
-            if char in old_point_structure[point_value]:
+        for point_value in OLD_POINT_STRUCTURE:
+            if char in OLD_POINT_STRUCTURE[point_value]:
                 letterPoints += 'Points for {char}: {point_value}\n'.format(char = char, point_value = point_value)
 
     return letterPoints
@@ -28,25 +29,59 @@ def old_scrabble_scorer(word):
 # don't change the names or your program won't work as expected.
 
 def initial_prompt():
-   print("Let's play some Scrabble!\n")
+    word = str(input("Let's play some Scrabble!\nPlease enter a word to score: "))
+    return word 
 
+def simple_scorer(word):
+    word = word.upper()
+    points = 0
+    for char in word:
+        points += 1
+    return points            
 
-def simple_scorer():
-   return 
-
-def vowel_bonus_scorer():
-    return 
+def vowel_bonus_scorer(word):
+    word = word.upper()
+    points = 0
+    for char in word:
+        if char in ['A', 'E', 'I', 'O', 'U']:
+            points += 3
+        else: points += 1
+    return points
 
 def scrabble_scorer():
     return
 
-scoring_algorithms = ()
+# scoring_algorithms = {
+#     1: '1: Simple Score. \nDescription: Each letter is worth 1 point\n',
+#     2: '2: Bonus Vowel. \nDescription: Vowels are 3 pts, consonants are 1pt.\n',
+#     3: '3: Scrabble. \nDescription: The traditional scoring algorithm.\n'
+# }
+
+scoring_algorithms = (
+    {
+        'name': 'Simple Score',
+        'description': 'Each letter is worth 1 point',
+        'scoring_function': simple_scorer},
+    {
+        'name': 'Bonus Vowels',
+        'description': 'Vowels are 3 pts, consonants are 1 pt',
+        'scoring_function': vowel_bonus_scorer},
+    {
+        'name': 'Scrabble',
+        'description': 'The traditional scoring algorithm',
+        'scoring_function': old_scrabble_scorer}
+)
 
 def scorer_prompt():
-    return 
+    user_input = int(input('Which scoring algorithm would you like to use?'))
+    scoring_algorithm_dict = scoring_algorithms[user_input]
+    return scoring_algorithm_dict
 
 def transform():
     return
 
 def run_program():
     word = initial_prompt()
+    
+    scorer_prompt()
+
